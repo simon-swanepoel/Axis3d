@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Image Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Ensures the body takes up the full height of the viewport */
+            min-height: 100vh;
+            
+            /* Background image settings */
+            background-image: url('Pulley.webp');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        /* Left White Shutter (28% width) */
+        .shutter-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 28vw; /* 28% of viewport width */
+            height: 100vh; /* Full viewport height */
+            background-color: #ffffff; /* White fill */
+            border-right: 4px solid #0020A0; /* Cobalt blue right edge */
+            z-index: 10; /* Ensures it overlays the background */
+            
+            /* Flexbox setup to easily center/position items inside the shutter */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Logo styling locked within the top 25% region of the shutter */
+        .shutter-logo {
+            margin-top: 2vh;          /* Top spacing */
+            max-width: 30vw;           /* Keeps horizontal margins comfortable inside shutter */
+            max-height: 25vh;         /* Ensures it fits easily within the top 25% height zone */
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Base 3D Rounded Red Block Style */
+        .shutter-block {
+            position: absolute;
+            height: 4vh;               /* 4vh high */
+            width: 20vw;               /* 20vw wide */
+            border-radius: 2vh;        /* Fully rounded ends */
+            cursor: pointer;          /* Changes mouse cursor on hover */
+            
+            /* 3D Metallic/Plastic Red Gradient Fill */
+            background: linear-gradient(180deg, #ff4d4d 0%, #cc0000 50%, #990000 100%);
+            
+            /* Highlights and Drop Shadows for 3D Effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.6),
+                        inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+            
+            /* Center and align text inside the block */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            /* Text formatting with 3D Embossed Effect */
+            color: #e6e6e6;
+            font-family: Arial, sans-serif;
+            font-size: 0.85vw;        /* Responsive font size relative to viewport width */
+            font-weight: 900;
+            text-align: center;
+            white-space: nowrap;      /* Prevents text from wrapping */
+            letter-spacing: 0.5px;
+            
+            /* Embossed Text Shadow */
+            text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.8), 
+                         0px 1px 1px rgba(255, 255, 255, 0.4);
+            
+            transition: transform 0.2s ease;
+        }
+
+        .shutter-block:hover {
+            transform: scale(1.03);    /* Subtle grow effect when hovering */
+        }
+
+        /* Spacing layout for the 7 blocks */
+        .block-1 { top: 40vh; }
+        .block-2 { top: 48vh; }
+        .block-3 { top: 56vh; }
+        .block-4 { top: 64vh; }
+        .block-5 { top: 72vh; }
+        .block-6 { top: 80vh; }
+        .block-7 { top: 88vh; }
+
+        /* ==================== BODY-LEVEL FIXED CENTER VIEWPORT ==================== */
+        
+        #preview-viewport {
+            position: fixed;
+            left: 40vw;                /* Starts 40vw to the right */
+            width: 50vw;               /* Width of viewport */
+            height: 80vh;              /* Fixed height for content display */
+            
+            /* Perfectly centered vertically */
+            top: 50vh;
+            transform: translateY(-50%);
+            
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 2px solid #0020A0;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 20;               /* Displays over background and overlay images */
+            padding: 30px;
+            
+            /* Hidden by default with smooth fade-in */
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;      /* Prevents viewport from stealing hover state */
+        }
+
+        #preview-viewport.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .viewport-content h2 {
+            font-family: Arial, sans-serif;
+            color: #0020A0;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8vw;
+        }
+
+        .viewport-content p {
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 1.1vw;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Shutter with Logo and 7 Equally Spaced Red Blocks -->
+    <div class="shutter-left">
+        <img src="Axislogomain.webp" alt="Axis 3D Design & Draughting" class="shutter-logo">
+        
+        <div class="shutter-block block-1" 
+             data-title="2D &amp; 3D Mechanical Design Services" 
+             data-desc="Detailed mechanical drafting, parametric modeling, assembly creation, and manufacturing drawing production conforming to global drafting standards.">
+            2D &amp; 3D MECHANICAL DESIGN
+        </div>
+
+        <div class="shutter-block block-2" 
+             data-title="Plant &amp; Piping Layouts" 
+             data-desc="Industrial piping schemes, general arrangement plans, isometric spool drawings, and full facility site layout configurations.">
+            PLANT &amp; PIPING LAYOUTS
+        </div>
+
+        <div class="shutter-block block-3" 
+             data-title="Structural &amp; Steelwork" 
+             data-desc="Heavy structural steel detailing, platform design, walkway frameworks, and fabrication-ready workshop drawings.">
+            STRUCTURAL &amp; STEELWORK
+        </div>
+
+        <div class="shutter-block block-4" 
+             data-title="Reverse Engineering" 
+             data-desc="Physical component measuring, point-cloud conversion, parametric reconstruction, and legacy part modernization.">
+            REVERSE ENGINEERING
+        </div>
+
+        <div class="shutter-block block-5" 
+             data-title="Finite Element Analysis (FEA)" 
+             data-desc="Structural stress evaluation, thermal dissipation study, displacement mapping, and mechanical load verification reports.">
+            FINITE ELEMENT ANALYSIS
+        </div>
+
+        <div class="shutter-block block-6" 
+             data-title="Technical Documentation" 
+             data-desc="Comprehensive user manuals, exploded view maintenance catalogues, BOM compilation, and engineering specifications.">
+            TECHNICAL DOCUMENTATION
+        </div>
+
+        <div class="shutter-block block-7" 
+             data-title="Prototype Development" 
+             data-desc="Rapid prototyping design iteration, 3D printing preparation, functional proof-of-concept CAD builds, and material testing models.">
+            PROTOTYPE DEVELOPMENT
+        </div>
+    </div>
+
+    <!-- MAIN BODY LEVEL CENTERED VIEWPORT -->
+    <div id="preview-viewport">
+        <div class="viewport-content">
+            <h2 id="vp-title">Title</h2>
+            <p id="vp-desc">Description</p>
+        </div>
+    </div>
+
+    <!-- Added Image with Position & Size Controls + Background Removal -->
+    <img src="Ply2.webp.jpg" 
+         alt="Blue Pulley Part" 
+         style="
+             position: absolute; 
+             left: 50vw;              /* Distance from left */
+             top: 10vh;               /* Distance from top */
+             width: 40vw;             /* Width of the image */
+             height: auto;            
+             z-index: 5;              
+             mix-blend-mode: multiply; 
+         ">
+
+    <!-- Javascript to swap content without changing viewport Y-position -->
+    <script>
+        const blocks = document.querySelectorAll('.shutter-block');
+        const viewport = document.getElementById('preview-viewport');
+        const vpTitle = document.getElementById('vp-title');
+        const vpDesc = document.getElementById('vp-desc');
+
+        blocks.forEach(block => {
+            block.addEventListener('mouseenter', () => {
+                // Update header and description text dynamically
+                vpTitle.innerHTML = block.getAttribute('data-title');
+                vpDesc.innerHTML = block.getAttribute('data-desc');
+
+                // Display the viewport in its fixed screen center
+                viewport.classList.add('active');
+            });
+
+            block.addEventListener('mouseleave', () => {
+                viewport.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
